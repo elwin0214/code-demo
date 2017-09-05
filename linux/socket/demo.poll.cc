@@ -4,7 +4,7 @@
 #include <unordered_set>
 #include <poll.h>
 #include <algorithm>
-#include "sockets.cpp"
+#include "sockets.cc"
 
 struct pollfd;
 using namespace std;

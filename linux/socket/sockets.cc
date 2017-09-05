@@ -8,6 +8,7 @@
 #include <string.h>
 #include <errno.h>
 #include <sys/time.h>
+#include <sys/uio.h>
 
 using namespace std;
 namespace sockets
@@ -105,9 +106,50 @@ int listen(int fd)
   return r;
 };
 
+int accept(int fd, struct sockaddr_in &addr)
+{
+  socklen_t len = sizeof(addr);
+  int r = ::accept(fd, (struct sockaddr *)&addr, &len);
+  if (r < 0)
+  {
+    fprintf(stdout, "fd = %d, errno = %d, err = %s\n", fd, errno, strerror(errno));
+  }
+  return r;
+};
+
+int connect(int fd, struct sockaddr_in &addr)
+{
+  int r = connect(fd, (const struct sockaddr *)&addr, sizeof(struct sockaddr_in));
+  if (r < 0)
+  {
+    fprintf(stdout, "fd = %d, errno = %d, err = %s\n", fd, errno, strerror(errno));
+  }
+  return r;
+};
+
 int close(int fd)
 {
   int r = ::close(fd);
+  if (r < 0)
+  {
+    fprintf(stdout, "fd = %d, errno = %d, err = %s\n", fd, errno, strerror(errno));
+  }
+  return r;
+};
+
+ssize_t write(int fd, const void* buf, size_t len)
+{
+  ssize_t r = ::write(fd, buf, len);
+  if (r < 0)
+  {
+    fprintf(stdout, "fd = %d, errno = %d, err = %s\n", fd, errno, strerror(errno));
+  }
+  return r;
+};
+
+ssize_t read(int fd, void* buf, size_t len)
+{
+  ssize_t r = ::read(fd, buf, len);
   if (r < 0)
   {
     fprintf(stdout, "fd = %d, errno = %d, err = %s\n", fd, errno, strerror(errno));

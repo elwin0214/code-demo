@@ -11,7 +11,7 @@
 #include <string>
 #include <iostream>
 #include <string.h>
-#include "sockets.cpp"
+#include "sockets.cc"
 
 using namespace std;
 

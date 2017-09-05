@@ -1,8 +1,7 @@
-#include <string>
 #include <iostream>
+#include <string>
 
 using namespace std;
-
 /*
 （1）非const左值引用只能绑定到非const左值；
 
@@ -17,20 +16,40 @@ using namespace std;
 //http://zh.cppreference.com/w/cpp/utility/forward
 //Things that are declared as rvalue reference can be lvalues or rvalues.
 // The distinguishing criterion is: if it has a name, then it is an lvalue. Otherwise, it is an rvalue.
-void f(string&& s)
+
+struct A
 {
- cout << "f(string&& s)" << endl;
+  void call(const std::string& value)
+  {
+    cout << "A::call(const &)" << endl;
+  }
+
+  void call(std::string&& value)
+  {
+    cout << "A::call(&&)" << endl;
+  }
+
 };
 
-void f(const string& s)
+struct B
 {
-  cout << "f(const string& s)" << endl;
+  void call(const std::string& value)
+  {
+    cout << "B::call(const &)" << endl;
+  }
 };
 
 int main()
 {
-  f("abc");//lvalue rvalue 区别是是否有名字？？
+  std::string s1 = "abc";
+  A a;
+  a.call(s1); //A::call(const &)
+  a.call(std::move(s1)); //A::call(&&)
+  a.call("abc"); //A::call(&&)
+
+  B b;
+  b.call(std::move(s1));//B::call(const &)
+  b.call("abc");//B::call(const &)
 
   return 0;
 }
-

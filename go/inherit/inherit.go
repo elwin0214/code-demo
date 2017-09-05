@@ -2,25 +2,27 @@ package main
 
 import "fmt"
 
-type People struct{}
+type A struct{}
 
-func (p *People) ShowA() {
-	fmt.Println("showA")
-	p.ShowB()
+func (p *A) Show1() {
+	fmt.Println("A.Show1()")
+	p.Show2()
 }
-func (p *People) ShowB() {
-	fmt.Println("showB")
-}
-
-type Teacher struct {
-	People
+func (p *A) Show2() {
+	fmt.Println("A.show2()")
 }
 
-func (t *Teacher) ShowB() {
-	fmt.Println("teacher showB")
+type B struct {
+	A
 }
+
+func (t *B) Show2() {
+	fmt.Println("B.show2()")
+}
+
 
 func main() {
-	t := Teacher{}
-	t.ShowA() // showA  showB
+	t := B{}
+	t.Show1() // A.show1  A.show2
+  t.Show2() //B.show2()
 }

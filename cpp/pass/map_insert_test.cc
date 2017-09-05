@@ -70,7 +70,7 @@ void test_insert()
   map<int, C> m;
   { 
     C::clean();
-    m[1] = C();  // 2
+    m[1] = C();  
     C::print_count();
     assert(1 == C::count_move_assign);
     
@@ -81,7 +81,7 @@ void test_insert()
 
     C::clean();
     C c;
-    m[2] = c;  // 2
+    m[2] = c;  
     C::print_count();
     assert(1 == C::count_copy_assign);
     
@@ -92,7 +92,7 @@ void test_insert()
 
     C::clean();
     C c;
-    m[2] = std::move(c);  // 2
+    m[2] = std::move(c); 
     C::print_count();
     assert(1 == C::count_move_assign);
     
@@ -101,7 +101,7 @@ void test_insert()
   cout << "m.insert(pair<int, C>(2, C()));" << endl;
   {
     C::clean();
-    m.insert(pair<int, C>(3, C()));  // 3
+    m.insert(pair<int, C>(3, C()));  
     C::print_count();
     assert(2 == C::count_move_con);
     assert(0 == C::count_move_assign);
@@ -113,8 +113,8 @@ void test_insert()
     C c;
     m.insert(pair<int, C>(3, c));  // 3
     C::print_count();
-    //assert(2 == C::count_move_con);
-    //assert(0 == C::count_move_assign);
+    assert(1 == C::count_move_con);
+    assert(1 == C::count_copy_con);
   }
 
 }
