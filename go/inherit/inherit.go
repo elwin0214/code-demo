@@ -13,7 +13,7 @@ func (p *A) Show2() {
 }
 
 type B struct {
-	A
+	Apack
 }
 
 func (t *B) Show2() {

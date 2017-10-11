@@ -124,7 +124,7 @@ int main()
   return_rvalue(); //null
 
   cout << "================call : const A& a3 = std::move(a);" << endl;
-  const A& a3 = std::move(a);
+  const A& a3 = std::move(a);  //引用
   A a4 = a3; //copy 
 
   A a5 = std::move(a3); //move 

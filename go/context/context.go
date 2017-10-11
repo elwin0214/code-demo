@@ -8,15 +8,20 @@ import (
 func main() {
 	ctx, cancel := context.WithCancel(context.Background())
 	ch := make(chan string, 1)
+
 	defer func(ch chan string) {
-		fmt.Println(<-ch)
+		for i := 0; i < 10; i++ {
+			fmt.Println(<-ch)
+		}
 	}(ch)
 	defer cancel()
-	go func() {
-		select {
-		case <-ctx.Done():
-			ch <- "cancel"
-			return
-		}
-	}()
+	for i := 0; i < 10; i++ {
+		go func(index int) {
+			select {
+			case <-ctx.Done():
+				ch <- fmt.Sprintf("cancel_%d", index)
+				return
+			}
+		}(i)
+	}
 }
